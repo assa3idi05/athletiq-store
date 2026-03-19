@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function showLoginForm()
@@ -45,7 +46,7 @@ class AuthController extends Controller
         ]);
         Customer::create([
             'Email' => $request->email,
-            'Password' => $request->password,
+            'Password' => Hash::make($request->password),
         ]);
         return redirect()->route('registration_success')->with('success', 'Account created! Please login.');
     }
